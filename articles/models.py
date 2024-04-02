@@ -56,6 +56,11 @@ class Article(models.Model):
         # obj.save()
         # do another something
 
+    def __str__(self):
+        model_name = self.__class__.__name__
+        fields_str = ", ".join((f"{field.name}={getattr(self, field.name)}" for field in self._meta.fields))
+        return f"{model_name}({fields_str})"
+
 
 def article_pre_save(sender, instance, *args, **kwargs):
     # print('pre_save')

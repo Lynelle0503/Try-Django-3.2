@@ -72,6 +72,11 @@ class Recipe(models.Model):
     def get_image_upload_url(self):
         return reverse("recipes:recipe-ingredient-image-upload", kwargs={"parent_id": self.id})
 
+    def __str__(self):
+        model_name = self.__class__.__name__
+        fields_str = ", ".join((f"{field.name}={getattr(self, field.name)}" for field in self._meta.fields))
+        return f"{model_name}({fields_str})"
+
 
 
 def recipe_ingredient_image_upload_handler(instance, filename):
@@ -84,6 +89,11 @@ class RecipeIngredientImage(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=recipe_ingredient_image_upload_handler) # path/to/the/actual/file.png
     extracted = models.JSONField(blank=True, null=True)
+
+    def __str__(self):
+        model_name = self.__class__.__name__
+        fields_str = ", ".join((f"{field.name}={getattr(self, field.name)}" for field in self._meta.fields))
+        return f"{model_name}({fields_str})"
     
     # image
     # extracted_text
@@ -146,6 +156,11 @@ class RecipeIngredient(models.Model):
         else:
             self.quantity_as_float = None
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        model_name = self.__class__.__name__
+        fields_str = ", ".join((f"{field.name}={getattr(self, field.name)}" for field in self._meta.fields))
+        return f"{model_name}({fields_str})"
 
 # class RecipeImage():
 #     recipe = models.ForeignKey(Recipe)
