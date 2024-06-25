@@ -1,10 +1,10 @@
 """
 To render html web pages
 """
-import random
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from articles.models import Article
+import secrets
 
 def home_view(request, *args, **kwargs):
     """
@@ -12,7 +12,7 @@ def home_view(request, *args, **kwargs):
     Return HTML as a response (We pick to return the response)
     """
     name = "Justin" # hard coded
-    random_id = random.randint(1, 4) # pseudo random
+    random_id = secrets.SystemRandom().randint(1, 4) # pseudo random
     
     # from the database??
     article_obj = Article.objects.all().first()
