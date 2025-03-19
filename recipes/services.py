@@ -22,7 +22,7 @@ def extract_text_via_ocr_service(file_obj: File=None):
         "Authorization": f"Bearer {OCR_API_TOKEN_HEADER}"
     }
     with file_obj.open('rb') as f:
-        r = requests.post(OCR_API_ENDPOINT, files={"file": f}, headers=headers)
+        r = requests.post(OCR_API_ENDPOINT, files={"file": f}, headers=headers, timeout=60)
         if r.status_code in range(200, 299):
             if r.headers.get("content-type") == 'application/json':
                 data = r.json()
